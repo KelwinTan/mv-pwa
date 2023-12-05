@@ -16,6 +16,9 @@ Auth Progressive Web App using Next JS v12
 - Next JS was used for it's ability to do Server-Side Rendering which is the best approach for PWA requirements
 - Next JS has a great and active community and ecosystem having a rich ecosystem of plugins, libraries, and examples so it can be beneficial for finding solutions to common PWA challenges and staying up-to-date with best practices
 
+## Challenges 
+- Still not finished with the dark theme changes
+
 ### Dependencies
 
 - Firebase SDK v9.14.0
