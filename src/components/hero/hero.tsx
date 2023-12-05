@@ -3,7 +3,6 @@ import { Box, Heading, Stack, Text, createIcon } from "@chakra-ui/react";
 export default function CallToActionWithAnnotation() {
   return (
     <>
-      {/* <Container maxW={"3xl"}> */}
       <Stack
         as={Box}
         textAlign={"center"}
@@ -15,55 +14,14 @@ export default function CallToActionWithAnnotation() {
           fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
           lineHeight={"110%"}
         >
-          Indo Dev <br />
+          Maker&apos;s Venture
+          <br />
           <Text as={"span"} color={"green.400"}>
-            Remote Jobs
+            PWA Auth
           </Text>
         </Heading>
-        <Text color={"gray.500"}>
-          Curated jobs for software developers & tech folks.
-        </Text>
-        {/* <Stack
-            direction={"column"}
-            spacing={3}
-            align={"center"}
-            alignSelf={"center"}
-            position={"relative"}
-          >
-            <Button
-              colorScheme={"green"}
-              bg={"green.400"}
-              rounded={"full"}
-              px={6}
-              _hover={{
-                bg: "green.500",
-              }}
-            >
-              Get Started
-            </Button>
-            <Box>
-              <Icon
-                as={Arrow}
-                color={useColorModeValue("gray.800", "gray.300")}
-                w={71}
-                position={"absolute"}
-                right={-71}
-                top={"10px"}
-              />
-              <Text
-                fontSize={"lg"}
-                fontFamily={"Caveat"}
-                position={"absolute"}
-                right={"-125px"}
-                top={"-15px"}
-                transform={"rotate(10deg)"}
-              >
-                Starting at $15/mo
-              </Text>
-            </Box>
-          </Stack> */}
+        <Text color={"gray.500"}>Technical Test - Kelwin Tantono</Text>
       </Stack>
-      {/* </Container> */}
     </>
   );
 }

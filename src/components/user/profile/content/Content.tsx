@@ -6,7 +6,7 @@ import CompanySettings from "./CompanySettings";
 import Notifications from "./Notifications";
 
 const Content = () => {
-  const tabs = ["Account Settings", "Company Settings", "Notifications"];
+  const tabs = ["Account Settings"];
 
   return (
     <Box

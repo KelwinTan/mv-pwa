@@ -1,3 +1,4 @@
+import { GetCurrentlySignedInUser } from "@api/auth";
 import {
   Avatar,
   AvatarBadge,
@@ -16,39 +17,36 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { User } from "firebase/auth";
+import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
 
 function ProfileInfo() {
   const [userProfile, setUserProfile] = useState(null);
-
+  const [authorized, setAuthorized] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const profileImage = useRef(null);
+  const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
 
-  const openChooseImage = () => {
-    // profileImage.current.click();
-  };
-
-  //   const changeProfileImage = (event) => {
-  //     const ALLOWED_TYPES = ["image/png", "image/jpeg", "image/jpg"];
-  //     const selected = event.target.files[0];
-
-  //     if (selected && ALLOWED_TYPES.includes(selected.type)) {
-  //       let reader = new FileReader();
-  //       reader.onloadend = () => setUserProfile(reader.result);
-  //       return reader.readAsDataURL(selected);
-  //     }
-
-  //     onOpen();
-  //   };
+  useEffect(() => {
+    GetCurrentlySignedInUser().then((user) => {
+      if (user) {
+        setAuthorized(true);
+        setUser(user);
+      } else {
+        router.push("/");
+      }
+    });
+  });
 
   return (
     <VStack spacing={3} py={5} borderBottomWidth={1} borderColor="brand.light">
       <Avatar
         size="2xl"
-        name="Tim Cook"
+        name={user?.email || "default"}
         cursor="pointer"
-        onClick={openChooseImage}
-        src={userProfile ? userProfile : "/img/tim-cook.jpg"}
+        src={user?.photoURL || "/img/tim-cook.jpg"}
       >
         <AvatarBadge bg="brand.blue" boxSize="1em">
           <svg width="0.4em" fill="currentColor" viewBox="0 0 20 20">
@@ -60,12 +58,7 @@ function ProfileInfo() {
           </svg>
         </AvatarBadge>
       </Avatar>
-      <input
-        hidden
-        type="file"
-        ref={profileImage}
-        // onChange={changeProfileImage}
-      />
+      <input hidden type="file" ref={profileImage} />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -90,10 +83,10 @@ function ProfileInfo() {
       </Modal>
       <VStack spacing={1}>
         <Heading as="h3" fontSize="xl" color="brand.dark">
-          Tim Cook
+          {user?.displayName}
         </Heading>
         <Text color="brand.gray" fontSize="sm">
-          CEO of Apple
+          {user?.email}
         </Text>
       </VStack>
     </VStack>

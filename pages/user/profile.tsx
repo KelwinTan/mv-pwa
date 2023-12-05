@@ -12,7 +12,7 @@ export default function Profile() {
       <div className={styles.container}>
         <Head>
           <title>User Profile</title>
-          <meta name="description" content="user profile indo-dev" />
+          <meta name="description" content="user profile mv-pwa" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
         {/* <UserProfileEdit /> */}

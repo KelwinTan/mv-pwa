@@ -1,7 +1,7 @@
-import {
+import app, {
   GetCurrentlySignedInUser,
   HandleGoogleProvider,
-  HandleLogin,
+  HandleRegister,
 } from "@api/auth";
 import {
   Box,
@@ -24,14 +24,9 @@ import LoadingScreen from "@components/loader/LoadingScreen";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PasswordField } from "./PasswordField";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-function LoginCard() {
+function RegisterCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authorized, setAuthorized] = useState(false);
@@ -39,22 +34,10 @@ function LoginCard() {
   const provider = new GoogleAuthProvider();
   const router = useRouter();
 
-  const handleLogin = async (email: string, password: string) => {
-    const auth = getAuth();
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // Redirect to the home page or any other page you want after successful login
-      router.push("/");
-    } catch (error) {
-      console.log("error: ", error);
-    }
-  };
-
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
-    handleLogin(email, password);
+    HandleRegister(email, password);
     router.push("/");
   };
 
@@ -85,11 +68,11 @@ function LoginCard() {
     <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
       <Flex p={8} flex={1} align={"center"} justify={"center"}>
         <Stack spacing={4} w={"full"} maxW={"md"}>
-          <Heading fontSize={"2xl"}>Login to your account</Heading>
+          <Heading fontSize={"2xl"}>Register your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            Don t have an account?{" "}
-            <Link color={"blue.400"} href={"/auth/register"}>
-              Register
+            Already have an account?{" "}
+            <Link color={"blue.400"} href="/auth/login">
+              Login
             </Link>{" "}
             ✌️
           </Text>
@@ -108,20 +91,12 @@ function LoginCard() {
             }}
           />
           <Stack spacing={6}>
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              align={"start"}
-              justify={"space-between"}
-            >
-              <Checkbox>Remember me</Checkbox>
-              <Link color={"blue.500"}>Forgot password?</Link>
-            </Stack>
             <Button
               colorScheme={"blue"}
               variant={"solid"}
               onClick={handleSubmit}
             >
-              Login
+              Register
             </Button>
 
             <Box position="relative" padding="3">
@@ -154,4 +129,4 @@ function LoginCard() {
   );
 }
 
-export default LoginCard;
+export default RegisterCard;

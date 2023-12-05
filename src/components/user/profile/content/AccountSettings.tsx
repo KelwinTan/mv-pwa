@@ -1,25 +1,45 @@
+import { GetCurrentlySignedInUser } from "@api/auth";
 import { FormControl, FormLabel, Grid, Input, Select } from "@chakra-ui/react";
+import { User } from "firebase/auth";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 function AccountSettings() {
+  const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    GetCurrentlySignedInUser().then((user) => {
+      if (user) {
+        setAuthorized(true);
+        setUser(user);
+      } else {
+        router.push("/");
+      }
+    });
+  });
+
   return (
     <Grid
       templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }}
       gap={6}
     >
-      <FormControl id="firstName">
-        <FormLabel>First Name</FormLabel>
-        <Input focusBorderColor="brand.blue" type="text" placeholder="Tim" />
+      <FormControl id="name">
+        <FormLabel>Name</FormLabel>
+        <Input
+          focusBorderColor="brand.blue"
+          type="text"
+          placeholder={user?.displayName || "-"}
+        />
       </FormControl>
-      <FormControl id="lastName">
-        <FormLabel>Last Name</FormLabel>
-        <Input focusBorderColor="brand.blue" type="text" placeholder="Cook" />
-      </FormControl>
+
       <FormControl id="phoneNumber">
         <FormLabel>Phone Number</FormLabel>
         <Input
           focusBorderColor="brand.blue"
           type="tel"
-          placeholder="(408) 996–1010"
+          placeholder={user?.phoneNumber || "-"}
         />
       </FormControl>
       <FormControl id="emailAddress">
@@ -27,40 +47,8 @@ function AccountSettings() {
         <Input
           focusBorderColor="brand.blue"
           type="email"
-          placeholder="tcook@apple.com"
+          placeholder={user?.email || "-"}
         />
-      </FormControl>
-      <FormControl id="city">
-        <FormLabel>City</FormLabel>
-        <Select
-          focusBorderColor="brand.blue"
-          placeholder="Select city"
-          defaultValue={"Jakarta"}
-        >
-          <option value="california">California</option>
-          <option value="washington">Washington</option>
-          <option value="toronto">Toronto</option>
-          <option value="newyork" selected>
-            New York
-          </option>
-          <option value="london">London</option>
-          <option value="netherland">Netherland</option>
-          <option value="poland">Poland</option>
-        </Select>
-      </FormControl>
-      <FormControl id="country">
-        <FormLabel>Country</FormLabel>
-        <Select
-          focusBorderColor="brand.blue"
-          placeholder="Select country"
-          defaultValue={"Indonesia"}
-        >
-          <option value="america" selected>
-            America
-          </option>
-          <option value="england">England</option>
-          <option value="poland">Poland</option>
-        </Select>
       </FormControl>
     </Grid>
   );

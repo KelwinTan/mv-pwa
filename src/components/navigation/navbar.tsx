@@ -1,11 +1,5 @@
 import { GetCurrentlySignedInUser, SignOut } from "@api/auth";
-import {
-  AddIcon,
-  CloseIcon,
-  HamburgerIcon,
-  MoonIcon,
-  SunIcon,
-} from "@chakra-ui/icons";
+import { CloseIcon, HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -36,13 +30,8 @@ type link = {
 const Links: link[] = [
   {
     link: "/",
-    name: "Jobs",
+    name: "Home",
   },
-  // coming soon
-  // {
-  //   link: "/",
-  //   name: "Job Boards",
-  // },
 ];
 
 const NavLink = ({ children }: { children: link }) => (
@@ -88,7 +77,7 @@ export default function NavWithAction() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box>IndoDev</Box>
+            <Box>MV-PWA</Box>
             <HStack
               as={"nav"}
               spacing={4}
@@ -117,17 +106,6 @@ export default function NavWithAction() {
                 Toggle
               </SunIcon>
             )}
-            <Button
-              variant={"solid"}
-              colorScheme={"teal"}
-              size={"sm"}
-              mr={4}
-              leftIcon={<AddIcon />}
-              onClick={() => router.push("/job/post")}
-            >
-              Post a Job
-            </Button>
-
             {user ? (
               <Menu>
                 <MenuButton
@@ -174,26 +152,12 @@ export default function NavWithAction() {
                   <MenuItem onClick={() => router.push("/auth/login")}>
                     Login
                   </MenuItem>
-                  <MenuItem>Register</MenuItem>
+                  <MenuItem onClick={() => router.push("/auth/register")}>
+                    Register
+                  </MenuItem>
                 </MenuList>
               </Menu>
             )}
-
-            {/* <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
-              >
-                <Avatar size={"sm"} src={""} />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Profile | Coming Soon</MenuItem>
-                <MenuDivider />
-              </MenuList>
-            </Menu> */}
           </Flex>
         </Flex>
 

@@ -1,7 +1,7 @@
 import {
   User,
   onAuthStateChanged,
-  signInWithPopup,
+  signInWithEmailAndPassword,
   signOut,
 } from "@firebase/auth";
 import { initializeApp } from "firebase/app";
@@ -31,6 +31,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export function HandleLogin(email: string, password: string) {
+  const auth = getAuth();
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("errorcode: ", errorCode)
+      console.log("errormessage: ", errorMessage)
+    });
+}
+
+export function HandleRegister(email: string, password: string) {
   const auth = getAuth();
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
@@ -68,10 +83,10 @@ export function HandleGoogleProvider() {
   //       // ...
   //     });
 
-  signInWithPopup(auth, provider).then(() => {
-    const router = useRouter();
-    router.push("/");
-  });
+  // signInWithPopup(auth, provider).then(() => {
+  //   const router = useRouter();
+  //   router.push("/");
+  // });
 
   getRedirectResult(auth)
     .then((result) => {
@@ -134,3 +149,5 @@ export function SignOut() {
       // An error happened.
     });
 }
+
+export default app;
